@@ -1,7 +1,5 @@
-<h1 align="center">
-
-### Smart contract practice
-
-</h1>
+<div align="center">
+  <h1>Smart contract practice</h1>
+</div>
 
 ---

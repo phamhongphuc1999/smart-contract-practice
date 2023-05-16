@@ -12,3 +12,5 @@ cache
 artifacts
 
 .Ds_Store
+
+yarn-error.log
