@@ -52,7 +52,7 @@
     ]
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --config ./.eslintrc-staged.js --cache --fix",
+    "*.{js,ts}": "eslint --config ./.eslintrc-staged.js --cache --fix",
     "*.{json,yml,md}": [
       "prettier --write"
     ]

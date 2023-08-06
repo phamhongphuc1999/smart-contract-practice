@@ -14,3 +14,4 @@ artifacts
 .Ds_Store
 
 yarn-error.log
+.eslintcache
