@@ -41,7 +41,7 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "compile": "npx hardhat compile",
+    "compile": "rm -rf artifacts & rm -rf typechain & npx hardhat compile",
     "test": "npx hardhat test",
     "prepare": "husky install",
     "lint": "eslint ."
