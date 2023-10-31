@@ -41,7 +41,12 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "compile": "rm -rf artifacts & rm -rf typechain & npx hardhat compile",
+    "rmCompile": "rm -rf artifacts & rm -rf typechain & npx hardhat compile",
+    "compile": "npx hardhat compile",
+    "localNode": "npx hardhat node",
+    "localDeploy": "npx hardhat run --network localhost",
+    "deploy": "npx hardhat run --network",
+    "scripts": "npx hardhat run",
     "test": "npx hardhat test",
     "prepare": "husky install",
     "lint": "eslint ."
