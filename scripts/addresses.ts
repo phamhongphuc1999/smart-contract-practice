@@ -1,3 +1,1 @@
-export const deployedAddresses = {
-  lock: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
-};
+export const deployedAddresses = { lock: '0x8C297868b804E49605F768EEA2892F1E39Ed99Eb' };

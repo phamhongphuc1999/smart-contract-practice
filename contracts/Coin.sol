@@ -1,8 +1,44 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import './ERC20Interface.sol';
-import './SafeMath.sol';
+contract SafeMath {
+  function safeAdd(uint a, uint b) public pure returns (uint c) {
+    c = a + b;
+    require(c >= a);
+  }
+
+  function safeSub(uint a, uint b) public pure returns (uint c) {
+    require(b <= a);
+    c = a - b;
+  }
+
+  function safeMul(uint a, uint b) public pure returns (uint c) {
+    c = a * b;
+    require(a == 0 || c / a == b);
+  }
+
+  function safeDiv(uint a, uint b) public pure returns (uint c) {
+    require(b > 0);
+    c = a / b;
+  }
+}
+
+interface ERC20Interface {
+  function totalSupply() external returns (uint);
+
+  function balanceOf(address tokenOwner) external returns (uint balance);
+
+  function allowance(address tokenOwner, address spender) external returns (uint remaining);
+
+  function transfer(address to, uint tokens) external returns (bool success);
+
+  function approve(address spender, uint tokens) external returns (bool success);
+
+  function transferFrom(address from, address to, uint tokens) external returns (bool success);
+
+  event Transfer(address indexed from, address indexed to, uint tokens);
+  event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+}
 
 contract Coin is ERC20Interface, SafeMath {
   string public symbol;
@@ -48,11 +84,7 @@ contract Coin is ERC20Interface, SafeMath {
     return true;
   }
 
-  function transferFrom(
-    address from,
-    address to,
-    uint tokens
-  ) public returns (bool success) {
+  function transferFrom(address from, address to, uint tokens) public returns (bool success) {
     balances[from] = safeSub(balances[from], tokens);
     allowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);
     balances[to] = safeAdd(balances[to], tokens);
@@ -60,10 +92,7 @@ contract Coin is ERC20Interface, SafeMath {
     return true;
   }
 
-  function allowance(
-    address tokenOwner,
-    address spender
-  ) public view returns (uint remaining) {
+  function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
     return allowed[tokenOwner][spender];
   }
 

@@ -14,11 +14,8 @@ async function main() {
   const deployedAddresses = {
     lock: lock.address,
   };
-  writeFileSync(
-    resolve('./scripts/addresses.ts'),
-    'export const deployedAddresses = ' + JSON.stringify(deployedAddresses),
-    'utf-8'
-  );
+  const fileName = `ignore_${Date.now()}_addresses`;
+  writeFileSync(resolve(`./scripts/${fileName}`), JSON.stringify(deployedAddresses), 'utf-8');
   console.log(`lock address: ${lock.address}`);
 }
 

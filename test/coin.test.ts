@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import { ethers } from 'hardhat';
 import { Coin__factory } from '../typechain';
 
-describe('Coin contract', function () {
-  async function deployToken() {
+describe('Coin', function () {
+  async function deployCoin() {
     const etherSigner = ethers.provider.getSigner();
     const [owner, addr1, addr2] = await ethers.getSigners();
     const coin = await new Coin__factory(etherSigner).deploy();
@@ -14,7 +14,7 @@ describe('Coin contract', function () {
 
   describe('Deployment', function () {
     it('Should set right owner', async function () {
-      const { owner, coin } = await loadFixture(deployToken);
+      const { owner, coin } = await loadFixture(deployCoin);
       const minter = await coin.minter();
       expect(minter).to.equal(owner.address);
       const ownerBalance = await coin.balances(owner.address);
@@ -24,18 +24,20 @@ describe('Coin contract', function () {
 
   describe('Transactions', function () {
     it('Should transfer tokens between accounts', async function () {
-      const { owner, addr1, addr2, coin } = await loadFixture(deployToken);
+      const { owner, addr1, addr2, coin } = await loadFixture(deployCoin);
       await expect(coin.transfer(addr1.address, 50)).to.changeTokenBalances(
         coin,
         [owner, addr1],
         [-50, 50]
       );
-      await expect(
-        coin.connect(addr1).transfer(addr2.address, 50)
-      ).to.changeTokenBalances(coin, [addr1, addr2], [-50, 50]);
+      await expect(coin.connect(addr1).transfer(addr2.address, 50)).to.changeTokenBalances(
+        coin,
+        [addr1, addr2],
+        [-50, 50]
+      );
     });
     it('Should emit Transfer events', async function () {
-      const { coin, owner, addr1, addr2 } = await loadFixture(deployToken);
+      const { coin, owner, addr1, addr2 } = await loadFixture(deployCoin);
       await expect(coin.transfer(addr1.address, 50)).to.changeTokenBalances(
         coin,
         [owner, addr1],
@@ -45,13 +47,5 @@ describe('Coin contract', function () {
         .to.emit(coin, 'Transfer')
         .withArgs(addr1.address, addr2.address, 50);
     });
-    // it("Should fail if sender doesn't have enough tokens", async function () {
-    //   const { owner, coin, addr1 } = await loadFixture(deployToken);
-    //   const ownerBalance = await coin.balances(owner.address);
-    //   await expect(coin.connect(addr1).send(owner.address, 1))
-    //     .to.be.revertedWithCustomError(coin, 'InsufficientBalance')
-    //     .withArgs(1, 0);
-    //   expect(await coin.balances(owner.address)).to.equal(ownerBalance);
-    // });
   });
 });

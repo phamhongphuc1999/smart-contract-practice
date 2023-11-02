@@ -15,3 +15,5 @@ artifacts
 
 yarn-error.log
 .eslintcache
+
+ignore_*

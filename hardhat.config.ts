@@ -1,10 +1,10 @@
 import '@nomicfoundation/hardhat-toolbox';
-import { HardhatUserConfig } from 'hardhat/config';
 import '@typechain/hardhat';
+import 'hardhat-gas-reporter';
 import 'hardhat-prettier';
-
-// const INFURA_API_KEY = 'KEY';
-// const SEPOLIA_PRIVATE_KEY = 'YOUR SEPOLIA PRIVATE KEY';
+import { HardhatUserConfig } from 'hardhat/config';
+import 'solidity-coverage';
+import { DEPLOY_ACCOUNT } from './constants';
 
 const config: HardhatUserConfig = {
   solidity: '0.8.18',
@@ -12,12 +12,23 @@ const config: HardhatUserConfig = {
     outDir: 'typechain',
     target: 'ethers-v5',
   },
-  // networks: {
-  //   sepolia: {
-  //     url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
-  //     accounts: [SEPOLIA_PRIVATE_KEY],
-  //   },
-  // },
+  // defaultNetwork: 'bscTestnet',
+  networks: {
+    bscTestnet: {
+      url: 'https://data-seed-prebsc-2-s2.binance.org:8545/',
+      chainId: 97,
+      accounts: [DEPLOY_ACCOUNT ?? ''],
+    },
+    sepolia: {
+      url: 'https://rpc.sepolia.org',
+      chainId: 11155111,
+      accounts: [DEPLOY_ACCOUNT ?? ''],
+    },
+  },
+  gasReporter: {
+    enabled: true,
+    currency: 'BNB',
+  },
 };
 
 export default config;

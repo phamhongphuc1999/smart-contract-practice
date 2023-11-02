@@ -1,4 +1,6 @@
 import { ethers } from 'hardhat';
+import { writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { Coin__factory } from '../typechain';
 
 async function main() {
@@ -7,7 +9,12 @@ async function main() {
   console.log('Account balance: ', (await deployer.getBalance()).toString());
   const ethersSigner = ethers.provider.getSigner();
   const token = await new Coin__factory(ethersSigner).deploy();
-  console.log('Token address: ', token.address);
+  console.log('token address: ', token.address);
+  const fileName = `ignore_${Date.now()}_addresses`;
+  const deployedAddresses = {
+    lock: token.address,
+  };
+  writeFileSync(resolve(`./scripts/${fileName}`), JSON.stringify(deployedAddresses), 'utf-8');
 }
 
 main()
