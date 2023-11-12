@@ -10,7 +10,7 @@ async function main() {
   const ethersSigner = ethers.provider.getSigner();
   const token = await new Coin__factory(ethersSigner).deploy();
   console.log('token address: ', token.address);
-  const fileName = `ignore_${Date.now()}_addresses`;
+  const fileName = `ignore_${Date.now()}_coin_addresses`;
   const deployedAddresses = {
     lock: token.address,
   };

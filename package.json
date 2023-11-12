@@ -50,7 +50,8 @@
     "scripts": "npx hardhat run",
     "test": "npx hardhat test",
     "prepare": "husky install",
-    "lint": "eslint ."
+    "lint": "eslint --config ./.eslintrc-staged.js --cache --fix",
+    "eslint": "eslint ."
   },
   "commitlint": {
     "extends": [
