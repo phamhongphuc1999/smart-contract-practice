@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import 'hardhat/console.sol';
-
 contract SafeMath {
   function safeAdd(uint a, uint b) public pure returns (uint c) {
     c = a + b;
@@ -100,22 +98,5 @@ contract Coin is ERC20Interface, SafeMath {
 
   function balanceOf(address account) external view returns (uint) {
     return balances[account];
-  }
-
-  function deploy(bytes memory bytecode, uint _salt) external {
-    address addr;
-    assembly {
-      addr := create2(0, add(bytecode, 0x20), mload(bytecode), _salt)
-      if iszero(extcodesize(addr)) {
-        revert(0, 0)
-      }
-    }
-    console.log('addr', addr);
-  }
-
-  function computeAddress(bytes32 salt, bytes memory bytecode) external view returns (address) {
-    bytes32 bytecodeHash = keccak256(bytecode);
-    bytes32 _data = keccak256(abi.encodePacked(bytes1(0xff), address(this), salt, bytecodeHash));
-    return address(bytes20(_data << 96));
   }
 }
