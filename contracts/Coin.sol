@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import 'hardhat/console.sol';
+
 contract SafeMath {
   function safeAdd(uint a, uint b) public pure returns (uint c) {
     c = a + b;
@@ -69,9 +71,11 @@ contract Coin is ERC20Interface, SafeMath {
   function mint(address receiver, uint amount) public {
     require(msg.sender == minter);
     balances[receiver] += amount;
+    console.log(receiver, amount, balances[receiver]);
   }
 
   function transfer(address to, uint tokens) public returns (bool success) {
+    console.log('msg.sender', msg.sender, balances[msg.sender], tokens);
     balances[msg.sender] = safeSub(balances[msg.sender], tokens);
     balances[to] = safeAdd(balances[to], tokens);
     emit Transfer(msg.sender, to, tokens);

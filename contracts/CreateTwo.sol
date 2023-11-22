@@ -5,6 +5,7 @@ import 'hardhat/console.sol';
 
 contract CreateTwo {
   function deploy(bytes memory bytecode, uint _salt) external {
+    console.log('sender: ', msg.sender);
     address addr;
     assembly {
       addr := create2(0, add(bytecode, 0x20), mload(bytecode), _salt)
@@ -12,7 +13,7 @@ contract CreateTwo {
         revert(0, 0)
       }
     }
-    console.log(addr);
+    console.log('deployed address: ', addr);
   }
 
   function computeAddress(bytes memory bytecode, bytes32 salt) external view returns (address) {
@@ -22,7 +23,6 @@ contract CreateTwo {
   }
 
   function _call(address target, uint256 value, bytes memory data) internal {
-    console.logBytes(data);
     (bool success, bytes memory result) = target.call{value: value}(data);
     if (!success) {
       assembly {
@@ -32,8 +32,15 @@ contract CreateTwo {
   }
 
   function execute(address dest, uint256 value, bytes calldata func) external {
-    console.log('dest', dest);
-    console.log('value', value);
     _call(dest, value, func);
+  }
+
+  function delegateExecute(address target, bytes memory data) public payable {
+    (bool success, bytes memory result) = target.delegatecall(data);
+    if (!success) {
+      assembly {
+        revert(add(result, 32), mload(result))
+      }
+    }
   }
 }
