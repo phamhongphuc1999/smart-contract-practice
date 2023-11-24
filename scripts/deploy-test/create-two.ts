@@ -10,10 +10,10 @@ async function deployCreate2() {
   const ethersSigner = ethers.provider.getSigner();
   const createTwo = await new CreateTwo__factory(ethersSigner).deploy();
   console.log('Create two address: ', createTwo.address);
-  const tx = await createTwo.deploy(Coin__factory.bytecode, salt);
-  await tx.wait();
   const predictedAddress = await createTwo.computeAddress(Coin__factory.bytecode, salt);
   console.log('Predicted address: ', predictedAddress);
+  const tx = await createTwo.deploy(Coin__factory.bytecode, salt);
+  await tx.wait();
   const coinFactory = await ethers.getContractFactory('Coin');
   const predictedCoin = coinFactory.attach(predictedAddress).connect(deployer.address);
   const miner = await predictedCoin.minter();
@@ -25,12 +25,13 @@ async function deployByExecute() {
   console.log('Deploying contracts with the account: ', deployer.address);
   const ethersSigner = ethers.provider.getSigner();
   const createTwo = await new CreateTwo__factory(ethersSigner).deploy();
+  console.log('Create two address: ', createTwo.address);
+  const predictedAddress = await createTwo.computeAddress(Coin__factory.bytecode, salt);
+  console.log('Predicted address: ', predictedAddress);
   const createTwoInter = await new Interface(CreateTwo__factory.abi);
   const callData = createTwoInter.encodeFunctionData('deploy', [Coin__factory.bytecode, salt]);
   const tx = await createTwo.delegateExecute(createTwo.address, callData);
   await tx.wait();
-  const predictedAddress = await createTwo.computeAddress(Coin__factory.bytecode, salt);
-  console.log('Predicted address: ', predictedAddress);
   const coinFactory = await ethers.getContractFactory('Coin');
   const predictedCoin = coinFactory.attach(predictedAddress).connect(deployer.address);
   const miner = await predictedCoin.minter();
@@ -55,7 +56,7 @@ async function callDelegate() {
 }
 
 async function main() {
-  await callDelegate();
+  await deployByExecute();
 }
 
 main()

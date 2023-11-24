@@ -1,2 +1,0 @@
-- https://docs.soliditylang.org/en/v0.8.21/introduction-to-smart-contracts.html#
-- https://solidity-by-example.org/data-locations/
