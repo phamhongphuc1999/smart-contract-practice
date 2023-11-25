@@ -2,7 +2,12 @@ import { Interface } from '@ethersproject/abi';
 import { loadFixture } from '@nomicfoundation/hardhat-network-helpers';
 import { expect } from 'chai';
 import { ethers } from 'hardhat';
-import { Coin__factory, CreateTwo__factory } from '../typechain';
+import {
+  Coin__factory,
+  CreateTwo,
+  CreateTwo__factory,
+  SimpleContract__factory,
+} from '../typechain';
 
 const salt = '0x'.padEnd(66, '0');
 
@@ -80,7 +85,7 @@ describe('Create two', function () {
   });
 
   describe('Execute', function () {
-    it('Execute a view function', async function () {
+    it('Call a view function', async function () {
       const { createTwo, owner } = await loadFixture(deployCreateTwo);
       const ethersSigner = ethers.provider.getSigner();
       const coin = await new Coin__factory(ethersSigner).deploy();
@@ -97,7 +102,7 @@ describe('Create two', function () {
       decodedResult = coinInter.decodeFunctionResult('totalSupply', result);
       expect(decodedResult[0]).to.equal(1000);
     });
-    it('Execute a view function having parameters', async function () {
+    it('Call a view function having parameters', async function () {
       const { createTwo, owner } = await loadFixture(deployCreateTwo);
       const ethersSigner = ethers.provider.getSigner();
       const coin = await new Coin__factory(ethersSigner).deploy();
@@ -113,6 +118,55 @@ describe('Create two', function () {
       result = await createTwo.staticExecute(coin.address, callData);
       decodedResult = coinInter.decodeFunctionResult('balanceOf', result);
       expect(decodedResult[0]).to.equal(1000);
+    });
+  });
+
+  describe('Initializable', function () {
+    let simpleAddress = '';
+    let simpleInter: Interface;
+    let symbolCallData: string;
+    let ownerCallData: string;
+    let createTwo: CreateTwo;
+
+    before(async function () {
+      createTwo = (await loadFixture(deployCreateTwo)).createTwo;
+      simpleAddress = await createTwo.computeAddress(SimpleContract__factory.bytecode, salt);
+      const createTwoInter = await new Interface(CreateTwo__factory.abi);
+      let callData = createTwoInter.encodeFunctionData('deploy', [
+        SimpleContract__factory.bytecode,
+        salt,
+      ]);
+      const tx = await createTwo.delegateExecute(createTwo.address, callData);
+      await tx.wait();
+      simpleInter = await new Interface(SimpleContract__factory.abi);
+      symbolCallData = simpleInter.encodeFunctionData('symbol', []);
+      ownerCallData = simpleInter.encodeFunctionData('owner', []);
+    });
+    it('should empty symbol', async function () {
+      let result = await createTwo.staticExecute(simpleAddress, symbolCallData);
+      let decodedResult = simpleInter.decodeFunctionResult('symbol', result);
+      expect(decodedResult[0]).to.equal('');
+    });
+    it('Initialization correctly', async function () {
+      let callData = simpleInter.encodeFunctionData('initialize', ['PHP']);
+      let tx = await createTwo.execute(simpleAddress, 0, callData);
+      tx.wait();
+
+      let result = await createTwo.staticExecute(simpleAddress, symbolCallData);
+      let decodedResult = simpleInter.decodeFunctionResult('symbol', result);
+      expect(decodedResult[0]).to.equal('PHP');
+
+      result = await createTwo.staticExecute(simpleAddress, ownerCallData);
+      decodedResult = simpleInter.decodeFunctionResult('owner', result);
+      expect(decodedResult[0]).to.eq(createTwo.address);
+
+      callData = simpleInter.encodeFunctionData('setSymbol', ['PHP1']);
+      tx = await createTwo.execute(simpleAddress, 0, callData);
+      tx.wait();
+
+      result = await createTwo.staticExecute(simpleAddress, symbolCallData);
+      decodedResult = simpleInter.decodeFunctionResult('symbol', result);
+      expect(decodedResult[0]).to.equal('PHP1');
     });
   });
 });

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import './SimpleContract.sol';
+
 contract CreateTwo {
   function deploy(bytes memory bytecode, uint _salt) external {
     address addr;
