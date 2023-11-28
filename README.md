@@ -26,7 +26,7 @@ yarn test
 
 ### Reference
 
+- https://solidity-by-example.org/data-locations/
 - https://docs.soliditylang.org/en
 - https://solidity-by-example.org/app/multi-sig-wallet/
 - https://medium.com/@AyoAlfonso/implement-account-abstraction-aa-to-rotate-private-keys-while-maintaining-the-same-pubkey-address-b5c01f4d3cbb
-- https://solidity-by-example.org/data-locations/

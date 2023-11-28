@@ -11,12 +11,7 @@ module.exports = {
   },
   plugins: ['import', 'prettier', '@typescript-eslint'],
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto',
-      },
-    ],
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
     quotes: ['error', 'single'],
     semi: ['warn', 'always'],
     'no-use-before-define': 'off',
@@ -36,17 +31,5 @@ module.exports = {
     'import/no-unresolved': 'warn',
     'no-console': ['warn', { allow: ['debug', 'warn', 'error'] }],
     'no-debugger': 'warn',
-  },
-  settings: {
-    'import/ignore': ['node_modules'],
-    'import/resolver': {
-      alias: {
-        map: [
-          ['src', './src/'],
-          ['public', './public/'],
-        ],
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    },
   },
 };

@@ -3,7 +3,10 @@ pragma solidity ^0.8.9;
 
 import './SimpleContract.sol';
 
+// https://solidity-by-example.org/app/create2/
 contract CreateTwo {
+  event Deployed(address addr, uint salt);
+
   function deploy(bytes memory bytecode, uint _salt) external {
     address addr;
     assembly {
@@ -12,6 +15,7 @@ contract CreateTwo {
         revert(0, 0)
       }
     }
+    emit Deployed(addr, _salt);
   }
 
   function computeAddress(bytes memory bytecode, bytes32 salt) external view returns (address) {

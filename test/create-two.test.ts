@@ -25,8 +25,9 @@ describe('Create two', function () {
       const predictedAddress = await createTwo.computeAddress(Coin__factory.bytecode, salt);
       let isDeploy = await createTwo.isDeploy(Coin__factory.bytecode, salt);
       expect(isDeploy).to.equal(false);
-      const tx = await createTwo.deploy(Coin__factory.bytecode, salt);
-      await tx.wait();
+      await expect(createTwo.deploy(Coin__factory.bytecode, salt))
+        .to.emit(createTwo, 'Deployed')
+        .withArgs(predictedAddress, salt);
       isDeploy = await createTwo.isDeploy(Coin__factory.bytecode, salt);
       expect(isDeploy).to.equal(true);
       const predictedAddress1 = await createTwo.computeAddress(Coin__factory.bytecode, salt);
