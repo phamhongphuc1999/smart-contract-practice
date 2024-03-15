@@ -32,6 +32,7 @@
     "hardhat": "^2.14.0",
     "hardhat-gas-reporter": "^1.0.9",
     "hardhat-prettier": "^0.0.1",
+    "husky": "^9.0.11",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "prettier-plugin-solidity": "^1.1.3",
@@ -49,7 +50,8 @@
     "scripts": "npx hardhat run",
     "test": "npx hardhat test",
     "lint": "eslint --config ./.eslintrc-staged.js --cache --fix",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "prepare": "husky install"
   },
   "commitlint": {
     "extends": [
