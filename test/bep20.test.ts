@@ -14,6 +14,8 @@ describe('Bep20', function () {
   describe('Deployment', function () {
     it('Should set right owner', async function () {
       const { owner, token } = await loadFixture(deploy);
+      let totalSupply = await token.totalSupply();
+      expect(totalSupply).to.equal(1000);
       const _owner = await token.owner();
       expect(owner.address).to.equal(_owner);
       const name = await token.name();
@@ -22,6 +24,9 @@ describe('Bep20', function () {
       expect(symbol).to.equal('PHP');
       const ownerBalance = await token.balanceOf(owner.address);
       expect(ownerBalance).to.equal(1000);
+      await token.mint(1000);
+      totalSupply = await token.totalSupply();
+      expect(totalSupply).to.equal(2000);
     });
   });
 

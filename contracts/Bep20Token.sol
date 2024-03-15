@@ -14,4 +14,20 @@ contract Bep20Token is ERC20 {
   function getOwner() public view returns (address) {
     return owner;
   }
+
+  function mint(uint256 _mintAmount) public {
+    require(msg.sender == owner, 'invalid user');
+    _mint(owner, _mintAmount);
+  }
+
+  function transferFrom(
+    address from,
+    address to,
+    uint256 amount
+  ) public virtual override returns (bool) {
+    address spender = _msgSender();
+    _spendAllowance(from, spender, amount);
+    _transfer(from, to, amount);
+    return true;
+  }
 }
