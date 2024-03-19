@@ -5,11 +5,11 @@ import '@account-abstraction/contracts/core/BaseAccount.sol';
 import '@openzeppelin/contracts/proxy/utils/Initializable.sol';
 import '@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol';
 import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
-import '../Caller.sol';
-import '../CreateTwo.sol';
 
-contract Account is BaseAccount, Initializable, UUPSUpgradeable, Caller, CreateTwo {
+contract Account is BaseAccount, Initializable, UUPSUpgradeable {
   using ECDSA for bytes32;
+
+  uint96 private _nonce;
   address public owner;
 
   IEntryPoint private immutable _entryPoint;
@@ -48,7 +48,21 @@ contract Account is BaseAccount, Initializable, UUPSUpgradeable, Caller, CreateT
     emit SimpleAccountInitialized(_entryPoint, owner);
   }
 
-  // Require the function call went through EntryPoint or owner
+  function getNonce() public view virtual override returns (uint256) {
+    return _nonce;
+  }
+
+  function validateUserOp(
+    UserOperation calldata userOp,
+    bytes32 userOpHash,
+    uint256 missingAccountFunds
+  ) external virtual override returns (uint256 validationData) {
+    _requireFromEntryPoint();
+    validationData = _validateSignature(userOp, userOpHash);
+    require(_nonce++ == userOp.nonce, 'Account::validateUserOp:invalid nonce');
+    _payPrefund(missingAccountFunds);
+  }
+
   function _requireFromEntryPointOrOwner() internal view {
     require(
       msg.sender == address(entryPoint()) || msg.sender == owner,
@@ -91,5 +105,50 @@ contract Account is BaseAccount, Initializable, UUPSUpgradeable, Caller, CreateT
   function _authorizeUpgrade(address newImplementation) internal view override {
     (newImplementation);
     _onlyOwner();
+  }
+
+  function _call(address target, uint256 value, bytes memory data) internal {
+    (bool success, bytes memory result) = target.call{value: value}(data);
+    if (!success) {
+      assembly {
+        revert(add(result, 32), mload(result))
+      }
+    }
+  }
+
+  function execute(address dest, uint256 value, bytes calldata func) external {
+    _requireFromEntryPointOrOwner();
+    _call(dest, value, func);
+  }
+
+  function executeBatch(
+    address[] calldata dest,
+    uint256[] calldata value,
+    bytes[] calldata func
+  ) external {
+    _requireFromEntryPointOrOwner();
+    require(
+      dest.length == func.length && (value.length == 0 || value.length == func.length),
+      'wrong array lengths'
+    );
+    if (value.length == 0) {
+      for (uint256 i = 0; i < dest.length; i++) {
+        _call(dest[i], 0, func[i]);
+      }
+    } else {
+      for (uint256 i = 0; i < dest.length; i++) {
+        _call(dest[i], value[i], func[i]);
+      }
+    }
+  }
+
+  function staticExecute(address target, bytes memory data) external view returns (bytes memory) {
+    (bool success, bytes memory result) = target.staticcall(data);
+    if (!success) {
+      assembly {
+        revert(add(result, 32), mload(result))
+      }
+    }
+    return result;
   }
 }
