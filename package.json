@@ -56,7 +56,9 @@
     "test": "npx hardhat test",
     "lint": "eslint --config ./.eslintrc-staged.js --cache --fix",
     "eslint": "eslint .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "circom": "circom $FILE --r1cs --wasm",
+    "witness": "node $PATH/generate_witness.js $PATH/$NAME.wasm input.json witness.wtns"
   },
   "commitlint": {
     "extends": [

@@ -17,3 +17,15 @@ yarn-error.log
 .eslintcache
 
 ignore_*
+
+# Circom
+sha_js/
+**/*.r1cs
+**/*.sym
+**/*.ptau
+**/*.zkey
+**/*.wtns
+input.json
+proof.json
+public.json
+verification_key.json
