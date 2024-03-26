@@ -15,24 +15,24 @@ describe('Verifier', function () {
       const { verifier } = await loadFixture(deployVerifier);
       const isVerify = await verifier.verifyProof(
         [
-          '0x055e75f0ff4307e382b98c17fb3ff5a43ca6a2098c8b13c8d8b3a27faa9b9ff4',
-          '0x15049e5c3bf7d9630c5b46f681be429f43ec8e187e0247ee71fa19cce05199e8',
+          '0x22795bf08965a362b9e95bf3cf408e59a3f7ff5f13052b8e55003676e1ece8e2',
+          '0x10e9d89d1f0cdf053c007fde36b6975ff9161da6b16e3d628700d62ca97ed7b0',
         ],
         [
           [
-            '0x0efc8983e86a7a8386df96a8b7c4913aad4e94f330a9abc6cfc9091f7276b347',
-            '0x0e1e4ef5987dcdd1293be187956496c8d92b22c546d187e91981c6fb60c074df',
+            '0x2031901bd478e8cc24a5d55c819ab83511d40d3aec65d11b5f5f109225d21f52',
+            '0x13ed58153c361fbd2dd845e42467506fafe72e73932279738becedaeaf53b5db',
           ],
           [
-            '0x03615c93044180901f4ee68c9b4e8fe3ba28e29d530b44b762fa25d18123283b',
-            '0x2976a556f3b0f2329408ea5eebe2693b859a05387261f034336d21aa23b45719',
+            '0x02491417e5da847eb3fe9802dfec2a2aab61d631aece5f8c0192d9dbba99f7eb',
+            '0x0f28db058c85e358e4dbf3aa85d95bd0a21364ccd88d1672d211570a936eb674',
           ],
         ],
         [
-          '0x0437bfdd8502f924dee4c2cec76c51788eaec48bf339d91491ddd9357a059030',
-          '0x0b78a12522a7fcbee0dd0c4dd505305794e6e0704ad9795c03d52e481960848f',
+          '0x2e6582aae9ffe1b21c0f0f1a7d30dafb6a244eb574f0cc00da25a1ca4e017c2e',
+          '0x15b3e50b925519c0afc5eea2906bfe44f01dbc07c45c3fcf70a7db6848ab514e',
         ],
-        ['0x1f37b6d5094b9a3370f4f3945562c9439ce417c702a16a8d534de17405ed182f']
+        ['0x0000000000000000000000000000000000000000000000000000000000000001']
       );
       expect(isVerify).to.equal(true);
     });

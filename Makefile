@@ -16,10 +16,14 @@ compile:
 witness:
 	node $(PATH)/generate_witness.js $(PATH)/$(NAME).wasm input.json witness.wtns
 
-## Genrate a proof.
+## Provide a power.
 power:
 	@chmod +x ./shells/power.sh
 	@./shells/power.sh $(POWER) $(NAME)
+
+## Generate a proof
+proof:
+	snarkjs groth16 prove $(NAME).zkey witness.wtns proof.json public.json
 
 ## Verify a proof.
 verify:
