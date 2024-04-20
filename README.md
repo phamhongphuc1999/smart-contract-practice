@@ -12,10 +12,16 @@
 yarn install
 ```
 
+- Create your environment
+
+```shell
+cp .env_example .env
+```
+
 - Compile contracts
 
 ```shell
-yarn compile
+yarn rmCompile
 ```
 
 - Run test
