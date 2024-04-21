@@ -39,18 +39,14 @@ generate:
 
 ## Clear.
 clear:
-	rm -rf $(NAME)_js
-	rm proof.json
-	rm public.json
-	rm verification_key.json
-	rm $(NAME).ptau
-	rm $(NAME)1.ptau
-	rm $(NAME)final.ptau
-	rm $(NAME).zkey
-	rm $(NAME)1.zkey
-	rm $(NAME).r1cs
-	rm witness.wtns
-	rm verifier.sol
+	rm -rf *_js
+	rm -f *.zkey
+	rm -f *.r1cs
+	rm -f *.ptau
+	rm -f *.wtns
+	rm -f proof.json
+	rm -f public.json
+	rm -f verification_key.json
 
 ## Shows help. | Help
 help:

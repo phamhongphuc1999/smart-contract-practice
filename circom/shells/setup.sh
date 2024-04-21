@@ -23,7 +23,7 @@ sudo apt -y install curl wget git
 printf "${Green}Step 6: Install node environment${NC}\n"
 wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.39.0/install.sh | bash
 source ~/.profile
-nvm install v20.12.2
+nvm install v21.7.3
 node --version
 npm --version
 npm install -g yarn

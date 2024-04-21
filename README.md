@@ -4,7 +4,7 @@
 
 ---
 
-### Run
+## Run
 
 - Install packages
 
@@ -30,7 +30,12 @@ yarn rmCompile
 yarn test
 ```
 
-### Reference
+## Circom usage
+
+- I use docker for configing and running circom.
+- If you cause segment fault error on build docker's process, you should change node version, v21.7.3 fit for me.
+
+## Reference
 
 - https://solidity-by-example.org/data-locations/
 - https://docs.soliditylang.org/en

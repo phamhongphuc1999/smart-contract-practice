@@ -19,13 +19,11 @@ yarn-error.log
 ignore_*
 
 # Circom
-sha_js/
-**/*.r1cs
-**/*.sym
-**/*.ptau
-**/*.zkey
-**/*.wtns
-input.json
-proof.json
-public.json
-verification_key.json
+circom/*_js/
+circom/**/*.r1cs
+circom/**/*.sym
+circom/**/*.ptau
+circom/**/*.zkey
+circom/**/*.wtns
+circom/*.json
+circom/*.sol
