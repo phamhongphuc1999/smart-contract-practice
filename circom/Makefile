@@ -10,20 +10,20 @@ TARGET_MAX_CHAR_NUM = 20
 
 ## Compile circom. | Run
 compile:
-	circom $(FILE) --r1cs --wasm
+	circom $(name).circom --r1cs --wasm
 
 ## Compute witness with WebAssembly.
 witness:
-	node $(PATH)/generate_witness.js $(PATH)/$(NAME).wasm input.json witness.wtns
+	node $(name)_js/generate_witness.js $(name)_js/$(name).wasm input.json witness.wtns
 
 ## Provide a power.
 power:
 	@chmod +x ./shells/power.sh
-	@./shells/power.sh $(POWER) $(NAME)
+	@./shells/power.sh $(power) $(name)
 
 ## Generate a proof
 proof:
-	snarkjs groth16 prove $(NAME).zkey witness.wtns proof.json public.json
+	snarkjs groth16 prove $(name)1.zkey witness.wtns proof.json public.json
 
 ## Verify a proof.
 verify:
@@ -31,7 +31,7 @@ verify:
 
 ## Compile a smart contract.
 solidity:
-	snarkjs zkey export solidityverifier $(NAME)1.zkey verifier.sol
+	snarkjs zkey export solidityverifier $(name)1.zkey verifier.sol
 
 ## Generate parameters for smart contract.
 generate:
@@ -44,6 +44,7 @@ clear:
 	rm -f *.r1cs
 	rm -f *.ptau
 	rm -f *.wtns
+	rm -f *.sol
 	rm -f proof.json
 	rm -f public.json
 	rm -f verification_key.json
@@ -73,6 +74,3 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 	@echo ''
-
-format:
-	black .

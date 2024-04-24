@@ -16,4 +16,4 @@ template Guardians(){
     out <== compare.out;
 }
 
-component main = Guardians();
+component main {public [hash]} = Guardians();

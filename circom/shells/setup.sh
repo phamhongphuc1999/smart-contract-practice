@@ -31,10 +31,13 @@ npm install -g yarn
 printf "${Green}Step 7: Install circom${NC}\n"
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 sudo apt -y install build-essential
+chmod +x $HOME/.cargo/env
+$HOME/.cargo/env
 git clone https://github.com/iden3/circom.git
-cd circom/circom
+cd circom
 cargo build --release
 cargo install --path circom
+cd ../
 
 printf "${Green}Step 8: Install snarkjs${NC}\n"
 npm install -g snarkjs
