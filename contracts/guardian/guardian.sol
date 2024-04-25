@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.12;
+
 import './Verifier.sol';
-import 'hardhat/console.sol';
 
 contract Guardian is Verifier {
   uint[] private guardians;

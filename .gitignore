@@ -27,3 +27,4 @@ circom/**/*.zkey
 circom/**/*.wtns
 circom/*.json
 circom/*.sol
+circom/circom/
