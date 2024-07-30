@@ -1,0 +1,13 @@
+{
+  "Result": {
+    "transaction_hash": "0xfb8f55a01cb9562ab3d3b05dfb57eb1a081cea2a091db870fd930d7063535d6b",
+    "gas_used": 1995,
+    "gas_unit_price": 100,
+    "sender": "050ca9d4d15e9aae2d59f54f8081dddf493f7a67770c046c8e3001f69635235e",
+    "sequence_number": 0,
+    "success": true,
+    "timestamp_us": 1722326140536665,
+    "version": 108647013,
+    "vm_status": "Executed successfully"
+  }
+}

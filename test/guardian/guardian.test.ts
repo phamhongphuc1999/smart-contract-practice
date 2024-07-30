@@ -35,7 +35,6 @@ describe('Guradian', function () {
       const _account1 = '0x9A85752B25Cb26a1E42f8E095588e4647859Bc36';
       const _account2 = '0xac7367fe5423f5134039b446D4B9dD9C06f57826';
       const _account3 = '0x0E043E83C116546737b49d0887d6CCe29f7bFD4d';
-      const _account4 = '0xeea17fC3a6078895ec5BA4Ef4158860f5303bD2A';
 
       const _hash1 = await generatePoseidonHash(_account1, 'hex');
       const _hash2 = await generatePoseidonHash(_account2, 'hex');

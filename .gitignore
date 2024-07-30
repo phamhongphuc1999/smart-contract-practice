@@ -28,3 +28,7 @@ circom/**/*.wtns
 circom/*.json
 circom/*.sol
 circom/circom/
+
+# aptos
+aptos/.aptos/config.yaml
+aptos/build/*
