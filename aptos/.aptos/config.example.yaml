@@ -1,9 +1,0 @@
----
-profiles:
-  default:
-    network: Devnet
-    private_key: 'your-private-key'
-    public_key: 'your-public-key'
-    account: your-account
-    rest_url: 'https://fullnode.devnet.aptoslabs.com'
-    faucet_url: 'https://faucet.devnet.aptoslabs.com'

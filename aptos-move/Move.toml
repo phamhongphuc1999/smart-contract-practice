@@ -1,10 +1,10 @@
 [package]
-name = "aptos-contract"
+name = "move-contract"
 version = "1.0.0"
 authors = []
 
 [addresses]
-todolist_addr="050ca9d4d15e9aae2d59f54f8081dddf493f7a67770c046c8e3001f69635235e"
+hello_blockchain = "_"
 
 [dev-addresses]
 

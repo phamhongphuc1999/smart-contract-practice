@@ -30,5 +30,5 @@ circom/*.sol
 circom/circom/
 
 # aptos
-aptos/.aptos/config.yaml
-aptos/build/*
+aptos-move/**/.aptos
+aptos-move/**/build
