@@ -17,6 +17,7 @@ module hello_blockchain::message {
     struct MessageHolder has key {
         message: string::String,
     }
+
     //<:!:resource
 
     #[event]
@@ -46,6 +47,22 @@ module hello_blockchain::message {
     public fun get_message(addr: address): string::String acquires MessageHolder {
         assert!(exists<MessageHolder>(addr), error::not_found(ENO_MESSAGE));
         borrow_global<MessageHolder>(addr).message
+    }
+
+    #[view]
+    public fun get_task_counter(addr: address): u64 acquires TodoList {
+        assert!(exists<TodoList>(addr), 1);
+        let todo_list = borrow_global_mut<TodoList>(addr);
+        todo_list.task_counter
+    }
+
+    #[view]
+    public fun get_task(addr: address, task_id: u64): Task acquires TodoList {
+        assert!(exists<TodoList>(addr), 1);
+        let todo_list = borrow_global_mut<TodoList>(addr);
+        assert!(table::contains(&todo_list.tasks, task_id), ETASK_DOESNT_EXIST);
+        let task_record = table::borrow_mut(&mut todo_list.tasks, task_id);
+        *task_record
     }
 
     public entry fun set_message(account: signer, message: string::String)

@@ -39,3 +39,4 @@ yarn test
 - https://vivianblog.hashnode.dev/how-to-create-a-zero-knowledge-dapp-from-zero-to-production#heading-6-test-circuits
 - https://medium.com/@cresowallet/social-recovery-fa64ef484396
 - https://github.com/thomas-waite/zkSocialRecovery
+- https://move-language.github.io/move/functions.html
