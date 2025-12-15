@@ -12,17 +12,24 @@ const config: HardhatUserConfig = {
     outDir: 'typechain',
     target: 'ethers-v5',
   },
-  // defaultNetwork: 'bscTestnet',
+  defaultNetwork: 'hardhat',
   networks: {
     bscTestnet: {
       url: 'https://data-seed-prebsc-2-s2.binance.org:8545/',
       chainId: 97,
-      accounts: [DEPLOY_ACCOUNT ?? ''],
+      accounts: DEPLOY_ACCOUNT ? [DEPLOY_ACCOUNT] : [],
     },
     sepolia: {
       url: 'https://rpc.sepolia.org',
       chainId: 11155111,
-      accounts: [DEPLOY_ACCOUNT ?? ''],
+      accounts: DEPLOY_ACCOUNT ? [DEPLOY_ACCOUNT] : [],
+    },
+    hardhat: {
+      forking: {
+        url: 'https://aged-billowing-arm.bsc.quiknode.pro/1323400cda942127c2e242e6d93b3924e7273279',
+        // blockNumber: 39000000, // optional – fork tại block cụ thể
+      },
+      chainId: 56,
     },
   },
   gasReporter: {
