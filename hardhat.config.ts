@@ -12,6 +12,9 @@ const config: HardhatUserConfig = {
     outDir: 'typechain',
     target: 'ethers-v5',
   },
+  gasReporter: {
+    enabled: false,
+  },
   defaultNetwork: 'hardhat',
   networks: {
     bscTestnet: {
@@ -25,17 +28,27 @@ const config: HardhatUserConfig = {
       accounts: DEPLOY_ACCOUNT ? [DEPLOY_ACCOUNT] : [],
     },
     hardhat: {
-      forking: {
-        url: 'https://aged-billowing-arm.bsc.quiknode.pro/1323400cda942127c2e242e6d93b3924e7273279',
-        // blockNumber: 39000000, // optional – fork tại block cụ thể
+      accounts: {
+        count: 9,
       },
-      chainId: 56,
+      hardfork: 'london',
+      forking: {
+        url: 'https://bsc.api.pocket.network',
+        blockNumber: 71713447,
+      },
+      chains: {
+        56: {
+          hardforkHistory: {
+            shanghai: 0,
+          },
+        },
+      },
     },
   },
-  gasReporter: {
-    enabled: true,
-    currency: 'BNB',
-  },
+  // gasReporter: {
+  //   enabled: true,
+  //   currency: 'BNB',
+  // },
 };
 
 export default config;
