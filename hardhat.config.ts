@@ -31,10 +31,10 @@ const config: HardhatUserConfig = {
       accounts: {
         count: 9,
       },
-      hardfork: 'london',
+      hardfork: 'shanghai',
       forking: {
-        url: 'https://bsc.api.pocket.network',
-        blockNumber: 71713447,
+        url: 'https://tasia-flashy-uneccentrically.ngrok-free.dev',
+        // blockNumber: 71741279, // 71740332
       },
       chains: {
         56: {
