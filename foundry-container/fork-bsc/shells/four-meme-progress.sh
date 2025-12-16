@@ -7,6 +7,8 @@ TOKEN="0x48FC55854700CC7aa055EB4bE583769c779d4444"
 
 DECIMAL=1000000000000000000
 
+echo "Calculating..."
+
 # Call contract (output as JSON)
 RAW=$(cast call \
   $HELPER \
